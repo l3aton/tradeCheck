@@ -1,0 +1,17 @@
+:root {
+  --text-w: #dddddd;
+  --text-b: #313131;
+  --bg: #444444;
+  --main: #636363;
+  --card: #555555;
+  --accent: #000277;
+  --price-up: #00ff00;
+  --price-down: #ff0000;
+}
+body {
+  background-color: var(--bg);
+  color: var(--text-w);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}

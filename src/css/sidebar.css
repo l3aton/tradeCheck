@@ -1,0 +1,39 @@
+.sidebar {
+  width: 250px;
+  background-color: var(--main);
+  border-right: 1px solid var(--accent);
+  height: 84dvh;
+  overflow-y: auto;
+}
+.sidebar h1 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--card);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--accent);
+  font-size: 1.2rem;
+}
+.sidebar h1 svg {
+  height: 1.5rem;
+  width: auto;
+}
+ul {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0;
+}
+li {
+  margin: 0.5rem 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.price-up {
+  color: var(--price-up);
+}
+.price-down {
+  color: var(--price-down);
+}

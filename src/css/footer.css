@@ -1,0 +1,11 @@
+.footer {
+  height: 8dvh;
+  width: 100%;
+  background-color: var(--main);
+  border-top: 1px solid var(--accent);
+}
+.footer p {
+  color: var(--text-w);
+  text-align: center;
+  margin: 0;
+}
