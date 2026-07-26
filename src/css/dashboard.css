@@ -1,0 +1,19 @@
+.dashboard {
+  overflow: auto;
+  height: 84dvh;
+  width: 100%;
+}
+.coin-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  gap: 1rem;
+}
+.add-card-info {
+  display: flex;
+  margin-left: auto;
+  gap: 1rem;
+}
