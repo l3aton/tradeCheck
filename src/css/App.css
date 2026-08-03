@@ -1,4 +1,26 @@
+#root {
+  min-height: 100vh;
+}
+.app-shell {
+  min-height: 100vh;
+}
 .main-content {
   display: flex;
-  width: 100%;
+  max-width: 1760px;
+  margin: 0 auto;
+}
+.ui-icon {
+  width: 22px;
+  height: 22px;
+}
+.market-table {
+  max-height: 720px;
+  overflow-y: auto !important;
+  overflow-x: auto;
+}
+.table-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #0e1a2b;
 }

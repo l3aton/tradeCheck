@@ -1,19 +1,304 @@
 .dashboard {
-  overflow: auto;
-  height: 84dvh;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
+  padding: 27px 18px 25px 14px;
 }
-.coin-card {
+.page-heading {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 0.5rem;
-  gap: 1rem;
+  margin-bottom: 16px;
 }
-.add-card-info {
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: #71809a;
+  font-size: 10px;
+  letter-spacing: 1.6px;
+}
+.page-heading h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+.range-button {
+  padding: 8px 13px;
+  border: 1px solid #273852;
+  border-radius: 8px;
+  background: #101d30;
+  color: #e1e7f2;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 1.15fr;
+  gap: 0;
+  margin-bottom: 16px;
+  border: 1px solid #1d2b42;
+  border-radius: 13px;
+  background: rgba(16, 28, 46, 0.82);
+  overflow: hidden;
+}
+.stat {
+  padding: 20px;
+  border-right: 1px solid #26344b;
+}
+.stat span,
+.fear span {
+  display: block;
+  color: #b7c2d5;
+  margin-bottom: 13px;
+}
+.stat strong {
+  font-size: 22px;
+}
+.stat em {
+  font-size: 12px;
+  font-style: normal;
+  margin-left: 10px;
+  font-weight: 500;
+}
+.fear {
   display: flex;
-  margin-left: auto;
-  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+.fear strong {
+  width: 74px;
+  height: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #f7c92f;
+  border-left-color: #5f4ff1;
+  border-radius: 50%;
+}
+.fear strong i {
+  font-size: 20px;
+  font-style: normal;
+}
+.fear small {
+  font-size: 10px;
+  color: #c5cddd;
+}
+.market-table {
+  border: 1px solid #1d2b42;
+  border-radius: 13px;
+  background: rgba(14, 26, 43, 0.82);
+  overflow: hidden;
+}
+.table-head,
+.coin-row {
+  display: grid;
+  grid-template-columns:
+    38px minmax(230px, 1.55fr) minmax(100px, 1fr) minmax(110px, 1fr)
+    minmax(120px, 1fr) minmax(120px, 1fr) minmax(130px, 1fr) 25px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 21px;
+}
+.table-head {
+  height: 48px;
+  border-bottom: 1px solid #1d2b42;
+  color: #9eabc0;
+  font-size: 12px;
+}
+.coin-row {
+  width: 100%;
+  height: 62px;
+  border: 0;
+  border-bottom: 1px solid #1d2b42;
+  background: transparent;
+  text-align: left;
+  font-size: 14px;
+}
+.coin-row:hover {
+  background: #15243a;
+}
+.coin-name {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.coin-name img {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+.coin-name strong {
+  font-size: 15px;
+}
+.coin-name small {
+  color: #8592a8;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.sparkline {
+  width: 150px;
+  height: 38px;
+}
+.sparkline path {
+  fill: none;
+  stroke: #ff4655;
+  stroke-width: 2;
+}
+.sparkline.up path {
+  stroke: #1bd67d;
+}
+.star {
+  font-size: 26px;
+  color: #a4b1c6;
+  text-align: right;
+}
+.star:hover {
+  color: #ffd22e;
+}
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 13px;
+  color: #8f9db3;
+  font-size: 12px;
+}
+.pagination div {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+.pagination button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #23334c;
+  border-radius: 7px;
+  background: #101d30;
+  color: #d7deeb;
+}
+.pagination button.selected {
+  background: #4d45de;
+  border-color: #6c60ff;
+}
+.pagination b {
+  font-weight: 400;
+  margin: 0 4px;
+}
+@media (max-width: 1100px) {
+  .sidebar {
+    width: 142px;
+    padding-left: 8px;
+  }
+  .side-nav button {
+    padding-left: 8px;
+    gap: 9px;
+  }
+  .watchlist-card,
+  .premium-card {
+    display: none;
+  }
+  .search-box {
+    margin-left: 0;
+  }
+  .table-head,
+  .coin-row {
+    grid-template-columns:
+      32px minmax(180px, 1.5fr) repeat(4, minmax(90px, 1fr))
+      100px 20px;
+  }
+  .table-head span:nth-child(6),
+  .coin-row > span:nth-child(6) {
+    display: none;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .fear {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .header {
+    padding: 0 14px;
+    height: 65px;
+  }
+  .brand {
+    min-width: auto;
+  }
+  .brand span {
+    display: none;
+  }
+  .header-actions {
+    gap: 9px;
+  }
+  .search-box {
+    order: 3;
+    position: absolute;
+    top: 72px;
+    left: 14px;
+    right: 14px;
+    max-width: none;
+  }
+  .main-content {
+    margin-top: 56px;
+  }
+  .sidebar {
+    width: 58px;
+    padding: 12px 6px;
+  }
+  .side-nav button {
+    justify-content: center;
+    padding: 0;
+  }
+  .side-nav button span {
+    font-size: 22px;
+  }
+  .side-nav button:not(.active) {
+    font-size: 0;
+  }
+  .dashboard {
+    padding: 16px 8px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stat {
+    padding: 13px;
+  }
+  .stat strong {
+    font-size: 16px;
+  }
+  .stat em {
+    display: block;
+    margin: 5px 0 0;
+  }
+  .market-table {
+    max-height: 560px;
+    overflow: auto;
+  }
+  .table-head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #0e1a2b;
+  }
+  .table-head,
+  .coin-row {
+    grid-template-columns: 27px minmax(145px, 1fr) 80px 75px 20px;
+    padding: 0 9px;
+  }
+  .table-head span:nth-child(5),
+  .coin-row > span:nth-child(5),
+  .table-head span:nth-child(6),
+  .coin-row > span:nth-child(6),
+  .table-head span:nth-child(7),
+  .coin-row > span:nth-child(7) {
+    display: none;
+  }
+  .coin-name small {
+    display: none;
+  }
+  .pagination div button:nth-child(n + 5) {
+    display: none;
+  }
 }

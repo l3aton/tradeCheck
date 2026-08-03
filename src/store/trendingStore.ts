@@ -9,7 +9,7 @@ interface TrendingCoin {
   price_usd: number;
   price_change_24h_usd: number;
   market_cap: number;
-  total_volume: string;
+  total_volume: number;
 }
 
 interface TrendingStore {

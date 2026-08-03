@@ -1,17 +1,49 @@
 :root {
-  --text-w: #dddddd;
-  --text-b: #313131;
-  --bg: #444444;
-  --main: #636363;
-  --card: #555555;
-  --accent: #000277;
-  --price-up: #00ff00;
-  --price-down: #ff0000;
+  --bg: #050d19;
+  --panel: #0e1828;
+  --panel-2: #111d30;
+  --line: #1d2a3e;
+  --text: #f3f6fc;
+  --muted: #91a0b8;
+  --blue: #5260ff;
+  --green: #20d886;
+  --red: #ff4d5c;
+}
+html {
+  scrollbar-color: #111d30 #111d30;
+}
+* {
+  box-sizing: border-box;
 }
 body {
-  background-color: var(--bg);
-  color: var(--text-w);
-  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  padding: 0;
+  background: radial-gradient(
+    circle at 48% -25%,
+    #14233c 0,
+    #07111f 42%,
+    #050d19 75%
+  );
+  color: var(--text);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  font-size: 14px;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  color: inherit;
+  cursor: pointer;
+}
+.price-up {
+  color: var(--green);
+}
+.price-down {
+  color: var(--red);
 }

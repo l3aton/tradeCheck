@@ -4,7 +4,7 @@ import { getTrendingCoins } from "../api/coingecko";
 
 import { useTrendingStore } from "../store/trendingStore";
 
-export function useTrending() {
+export function useTrending(page = 1) {
   const setCoins = useTrendingStore((state) => state.setCoins);
 
   const setLoading = useTrendingStore((state) => state.setLoading);
@@ -14,22 +14,22 @@ export function useTrending() {
       try {
         setLoading(true);
 
-        const data = await getTrendingCoins();
+        const data = await getTrendingCoins(page);
 
-        const coins = data.coins.map((coin: any) => ({
-          id: coin.item.id,
+        const coins = data.map((coin: any) => ({
+          id: coin.id,
 
-          name: coin.item.name,
+          name: coin.name,
 
-          symbol: coin.item.symbol,
+          symbol: coin.symbol,
 
-          thumb: coin.item.thumb,
+          thumb: coin.image,
 
-          market_cap_rank: coin.item.market_cap_rank,
-          price_usd: coin.item.data.price,
-          market_cap: coin.item.data.market_cap,
-          total_volume: coin.item.data.total_volume,
-          price_change_24h_usd: coin.item.data.price_change_percentage_24h.usd,
+          market_cap_rank: coin.market_cap_rank,
+          price_usd: coin.current_price,
+          market_cap: coin.market_cap,
+          total_volume: coin.total_volume,
+          price_change_24h_usd: coin.price_change_percentage_24h_in_currency,
         }));
 
         setCoins(coins);
@@ -39,5 +39,5 @@ export function useTrending() {
     }
 
     load();
-  }, []);
+  }, [page, setCoins, setLoading]);
 }

@@ -6,7 +6,11 @@ export function useBinanceSocket() {
     const socket = connectBinanceSocket();
 
     return () => {
-      socket.close();
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      } else if (socket.readyState === WebSocket.CONNECTING) {
+        socket.onopen = () => socket.close();
+      }
     };
   }, []);
 }
