@@ -1,7 +1,9 @@
 import "../css/sidebar.css";
 import { useMarketStore } from "../store/marketStore";
+import { useTrendingStore } from "../store/trendingStore";
 import { useState } from "react";
 import ModalCoin from "./modalCoin";
+import coinImages from "../helpers/coinImages.json";
 
 const PAIRS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT"];
 const navItems = [
@@ -17,14 +19,19 @@ const navItems = [
   ["⚙", "Settings"],
 ];
 
-function Sidebar() {
+function Sidebar({ activeSection, onSectionChange }) {
   const tickers = useMarketStore((state) => state.tickers);
+  const trendingCoins = useTrendingStore((state) => state.coins);
   const [selectedCoin, setSelectedCoin] = useState(null);
   return (
     <aside className="sidebar">
       <nav className="side-nav">
-        {navItems.map(([icon, label], index) => (
-          <button className={index === 0 ? "active" : ""} key={label}>
+        {navItems.map(([icon, label]) => (
+          <button
+            className={activeSection === label ? "active" : ""}
+            key={label}
+            onClick={() => onSectionChange(label)}
+          >
             <span>{icon}</span>
             {label}
           </button>
@@ -33,10 +40,14 @@ function Sidebar() {
       <section className="watchlist-card">
         <div className="section-title">
           <span>Watchlist</span>
-          <button>＋</button>
         </div>
         {PAIRS.map((pair) => {
           const ticker = tickers[pair];
+          const symbol = pair.replace("USDT", "");
+          const coin = trendingCoins.find(
+            (trendingCoin) => trendingCoin.symbol.toUpperCase() === symbol,
+          );
+          const thumb = coin?.thumb || coinImages[pair];
           return (
             <button
               className="watch-row"
@@ -44,15 +55,13 @@ function Sidebar() {
               onClick={() =>
                 ticker &&
                 setSelectedCoin({
-                  symbol: pair.replace("USDT", ""),
-                  name: pair.replace("USDT", ""),
-                  thumb: "",
+                  symbol,
+                  name: coin?.name || symbol,
+                  thumb,
                 })
               }
             >
-              <span className={`coin-dot ${pair.slice(0, 3).toLowerCase()}`}>
-                {pair.slice(0, 1)}
-              </span>
+              <img className="coin-dot" src={thumb} alt="" />
               <strong>{pair}</strong>
               <span className="watch-price">
                 ${ticker?.price?.toFixed(2) ?? "—"}
@@ -66,17 +75,7 @@ function Sidebar() {
           );
         })}
       </section>
-      <section className="premium-card">
-        <div>
-          ♛ <strong>Unlock Premium</strong>
-        </div>
-        <p>Get real-time alerts, premium insights and ad-free experience.</p>
-        <button>Upgrade Now</button>
-      </section>
-      <div className="dark-mode">
-        <span>◐ &nbsp;Dark Mode</span>
-        <i />
-      </div>
+
       <ModalCoin coin={selectedCoin} onClose={() => setSelectedCoin(null)} />
     </aside>
   );
