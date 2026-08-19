@@ -89,6 +89,10 @@
 .auth-submit:hover { transform: translateY(-1px); box-shadow: 0 13px 28px rgb(82 96 255 / 38%); }
 .auth-submit span { font-size: 18px; }
 .auth-switch { justify-content: center; gap: 6px; margin-top: 25px; color: #8290a8; font-size: 12px; }
+.auth-message { margin: -2px 0 0; font-size: 12px; line-height: 1.45; }
+.auth-error { color: #ff8f9a; }
+.auth-success { color: #72d6aa; }
+.auth-submit:disabled { cursor: wait; opacity: 0.7; }
 @media (max-width: 480px) {
   .modal-content-auth { padding: 32px 24px 26px; }
 }

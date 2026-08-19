@@ -4,6 +4,7 @@ import AuthPanel from "./authPanel.jsx";
 import { useRef, useState } from "react";
 import { searchCoins, searchPools } from "../api/coingecko";
 import { useTrendingStore } from "../store/trendingStore";
+import { useAuth } from "../hooks/useAuth.js";
 
 const pairQuoteCurrencies = ["USDT", "USDC", "BUSD", "USD"];
 
@@ -57,6 +58,7 @@ function Header() {
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const { user, signOut } = useAuth();
   const trendingCoins = useTrendingStore((state) => state.coins);
   const searchRequest = useRef(0);
   const searchTimer = useRef(null);
@@ -145,7 +147,8 @@ function Header() {
         <button
           className="profile"
           aria-label="Profile"
-          onClick={() => setIsAuthPanelOpen(true)}
+          onClick={() => (user ? signOut() : setIsAuthPanelOpen(true))}
+          title={user ? "Выйти" : "Войти"}
         >
           <Icon>
             <circle cx="12" cy="8" r="3" />
