@@ -13,11 +13,18 @@ function App() {
   const [page, setPage] = useState(1);
   const [activeSection, setActiveSection] = useState("Market");
   const [selectedAsset, setSelectedAsset] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const handleAssetSelection = (event) => setSelectedAsset(event.detail);
     window.addEventListener("tradecheck:select-asset", handleAssetSelection);
     return () => window.removeEventListener("tradecheck:select-asset", handleAssetSelection);
+  }, []);
+
+  useEffect(() => {
+    const showFavorites = () => setActiveSection("Favorites");
+    window.addEventListener("tradecheck:show-favorites", showFavorites);
+    return () => window.removeEventListener("tradecheck:show-favorites", showFavorites);
   }, []);
 
   const handlePageChange = (nextPage) => {
@@ -30,11 +37,12 @@ function App() {
 
   return (
     <div className="app-shell">
-      <Header />
+      <Header onMenuToggle={() => setIsSidebarOpen((value) => !value)} />
       <div className="main-content">
-        <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
-        {activeSection === "Market" ? (
-          <Dashboard page={page} onPageChange={handlePageChange} />
+        <div className={`sidebar-overlay ${isSidebarOpen ? "is-open" : ""}`} onClick={() => setIsSidebarOpen(false)} />
+        <Sidebar activeSection={activeSection} onSectionChange={(section) => { setActiveSection(section); setIsSidebarOpen(false); }} isOpen={isSidebarOpen} />
+        {activeSection === "Market" || activeSection === "Favorites" ? (
+          <Dashboard page={page} onPageChange={handlePageChange} onlyFavorites={activeSection === "Favorites"} />
         ) : (
           <InProgress section={activeSection} />
         )}

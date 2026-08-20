@@ -1,4 +1,5 @@
 .header {
+  position: relative;
   height: 78px;
   display: flex;
   align-items: center;
@@ -6,6 +7,7 @@
   border-bottom: 1px solid rgba(50, 69, 96, 0.35);
   gap: 40px;
 }
+.menu-toggle { display:none; }
 .brand {
   display: flex;
   align-items: center;
@@ -137,4 +139,21 @@
 }
 .profile .ui-icon {
   width: 23px;
+}
+@media (max-width:760px){
+  .header{height:65px;padding:0 12px;gap:10px}
+  .menu-toggle{display:flex;width:38px;height:38px;flex:none;flex-direction:column;justify-content:center;gap:5px;padding:8px;border:1px solid #26344c;border-radius:9px;background:#121e31;color:#dfe6f4;cursor:pointer}
+  .menu-toggle span{display:block;width:20px;height:2px;border-radius:2px;background:currentColor}
+  .brand{min-width:0;gap:8px}
+  .brand .logo{width:38px;height:38px}
+  .brand span{display:none}
+  .search-wrapper{position:absolute;top:73px;left:12px;right:12px;max-width:none;margin:0}
+  .search-wrapper .search-box{position:static;width:100%;height:42px;margin:0;box-sizing:border-box}
+  .search-box input{min-width:0;font-size:13px}
+  .search-box kbd{display:none}
+  .search-results{top:50px;max-height:58vh;overflow-y:auto}
+  .header-actions{gap:5px}
+  .header-actions .notification{display:none}
+  .header-actions button{padding:7px}
+  .profile-menu{top:57px;right:10px}
 }

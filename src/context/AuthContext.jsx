@@ -1,11 +1,13 @@
 import { createContext, useEffect, useMemo, useState } from "react";
 import { isSupabaseConfigured, supabase } from "../lib/supabase";
+import { useFavoritesStore } from "../store/favoritesStore.ts";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const loadFavorites = useFavoritesStore((state) => state.load);
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
@@ -17,12 +19,14 @@ export function AuthProvider({ children }) {
     supabase.auth.getSession().then(({ data }) => {
       if (isMounted) {
         setSession(data.session);
+        loadFavorites(data.session?.user?.id ?? null);
         setIsLoading(false);
       }
     });
 
     const { data: subscription } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession);
+      loadFavorites(nextSession?.user?.id ?? null);
       setIsLoading(false);
     });
 
@@ -30,7 +34,7 @@ export function AuthProvider({ children }) {
       isMounted = false;
       subscription.subscription.unsubscribe();
     };
-  }, []);
+  }, [loadFavorites]);
 
   const value = useMemo(() => ({
     session,

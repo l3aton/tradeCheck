@@ -19,12 +19,12 @@ const navItems = [
   ["⚙", "Settings"],
 ];
 
-function Sidebar({ activeSection, onSectionChange }) {
+function Sidebar({ activeSection, onSectionChange, isOpen }) {
   const tickers = useMarketStore((state) => state.tickers);
   const trendingCoins = useTrendingStore((state) => state.coins);
   const [selectedCoin, setSelectedCoin] = useState(null);
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? "is-open" : ""}`}>
       <nav className="side-nav">
         {navItems.map(([icon, label]) => (
           <button

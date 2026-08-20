@@ -2,6 +2,7 @@ import "../css/dashboard.css";
 import { useState } from "react";
 import { useTrendingStore } from "../store/trendingStore";
 import ModalCoin from "./modalCoin";
+import { useFavoritesStore } from "../store/favoritesStore.ts";
 
 const TOTAL_PAGES = 10;
 const PAGE_SIZE = 50;
@@ -75,10 +76,15 @@ const chart = (up = false) => (
   </svg>
 );
 
-function Dashboard({ page, onPageChange }) {
+function Dashboard({ page, onPageChange, onlyFavorites = false }) {
   const liveCoins = useTrendingStore((state) => state.coins);
   const coins = liveCoins.length ? liveCoins : fallback;
   const [selectedCoin, setSelectedCoin] = useState(null);
+  const favorites = useFavoritesStore((state) => state.favorites);
+  const toggleFavorite = useFavoritesStore((state) => state.toggle);
+  const visibleCoins = onlyFavorites ? coins.filter((coin) => favorites.includes(`${coin.symbol.toUpperCase()}USDT`)) : coins;
+  const mobilePageStart = Math.min(Math.max(page - 1, 1), TOTAL_PAGES - 2);
+  const mobilePages = [mobilePageStart, mobilePageStart + 1, mobilePageStart + 2];
   const firstItem = (page - 1) * PAGE_SIZE + 1;
 
   return (
@@ -134,11 +140,13 @@ function Dashboard({ page, onPageChange }) {
           <span>Last 7 Days</span>
           <span />
         </div>
-        {coins.map((coin, index) => (
+        {visibleCoins.map((coin, index) => {
+          const pair = `${coin.symbol.toUpperCase()}USDT`;
+          return (
           <button
             className="coin-row"
             key={coin.id || coin.symbol}
-            onClick={() => setSelectedCoin(coin)}
+            onClick={(event) => { if (event.target.closest(".star")) return; setSelectedCoin(coin); }}
           >
             <span>{firstItem + index}</span>
             <span className="coin-name">
@@ -159,13 +167,14 @@ function Dashboard({ page, onPageChange }) {
             <span>{money(coin.market_cap)}</span>
             <span>{money(coin.total_volume)}</span>
             <span>{chart(coin.price_change_24h_usd >= 0)}</span>
-            <span className="star">*</span>
+            <span className={`star ${favorites.includes(pair) ? "is-favorite" : ""}`} role="button" tabIndex="0" onClick={() => toggleFavorite(pair)} onKeyDown={(event) => event.key === "Enter" && toggleFavorite(pair)} aria-label={`${favorites.includes(pair) ? "Remove" : "Add"} ${pair} favorite`}>{favorites.includes(pair) ? "★" : "☆"}</span>
           </button>
-        ))}
+          );
+        })}
       </section>
-      <div className="pagination">
+      {!onlyFavorites && <div className="pagination">
         <span>
-          Showing {firstItem} to {firstItem + coins.length - 1} of{" "}
+          Showing {visibleCoins.length ? firstItem : 0} to {firstItem + visibleCoins.length - 1} of{" "}
           {TOTAL_PAGES * PAGE_SIZE}
         </span>
         <div>
@@ -176,7 +185,7 @@ function Dashboard({ page, onPageChange }) {
           >
             &lt;
           </button>
-          {Array.from({ length: TOTAL_PAGES }, (_, index) => index + 1).map(
+          <span className="pagination-pages pagination-pages-desktop">{Array.from({ length: TOTAL_PAGES }, (_, index) => index + 1).map(
             (pageNumber) => (
               <button
                 key={pageNumber}
@@ -186,7 +195,10 @@ function Dashboard({ page, onPageChange }) {
                 {pageNumber}
               </button>
             ),
-          )}
+          )}</span>
+          <span className="pagination-pages pagination-pages-mobile">{mobilePages.map((pageNumber) => (
+            <button key={pageNumber} className={page === pageNumber ? "selected" : ""} onClick={() => onPageChange(pageNumber)}>{pageNumber}</button>
+          ))}</span>
           <button
             aria-label="Next page"
             disabled={page === TOTAL_PAGES}
@@ -195,7 +207,7 @@ function Dashboard({ page, onPageChange }) {
             &gt;
           </button>
         </div>
-      </div>
+      </div>}
       <ModalCoin coin={selectedCoin} onClose={() => setSelectedCoin(null)} />
     </main>
   );

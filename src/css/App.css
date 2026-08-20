@@ -9,6 +9,7 @@
   max-width: 1760px;
   margin: 0 auto;
 }
+.sidebar-overlay { display: none; }
 .ui-icon {
   width: 22px;
   height: 22px;

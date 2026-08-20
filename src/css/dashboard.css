@@ -168,6 +168,8 @@
   gap: 9px;
   align-items: center;
 }
+.pagination-pages { display: flex; gap: 9px; align-items: center; }
+.pagination-pages-mobile { display: none; }
 .pagination button {
   width: 34px;
   height: 34px;
@@ -301,4 +303,28 @@
   .pagination div button:nth-child(n + 5) {
     display: none;
   }
+}
+.star { color: #65738a; cursor: pointer; font-size: 19px; }
+.star.is-favorite { color: #ffd45c; }
+@media (max-width:760px){
+  .sidebar{position:fixed;z-index:50;top:0;left:0;width:260px;height:100vh;min-height:100vh;padding:78px 14px 18px 18px;background:#0e1a2b;box-shadow:18px 0 40px rgba(0,0,0,.35);transform:translateX(-105%);transition:transform .28s ease;overflow-y:auto}
+  .sidebar.is-open{transform:translateX(0)}
+  .sidebar.is-open .side-nav button{justify-content:flex-start;padding-left:14px;font-size:inherit}
+  .sidebar.is-open .side-nav button:not(.active){font-size:inherit}
+  .sidebar.is-open .side-nav button span{font-size:23px}
+  .sidebar-overlay{display:block;position:fixed;z-index:40;inset:0;background:rgba(3,9,18,.62);opacity:0;pointer-events:none;transition:opacity .28s ease}
+  .sidebar-overlay.is-open{opacity:1;pointer-events:auto}
+  .main-content{margin-top:62px}
+  .dashboard{padding:16px 8px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat{padding:13px}
+  .stat strong{font-size:16px}
+  .fear{display:none}
+  .market-table{max-height:calc(100vh - 285px);overflow:auto}
+  .pagination{gap:8px}
+  .pagination > span:first-child{font-size:10px;white-space:nowrap}
+  .pagination-pages-desktop{display:none}
+  .pagination-pages-mobile{display:flex}
+  .pagination div{gap:5px}
+  .pagination button{width:32px;height:32px}
 }

@@ -1,10 +1,12 @@
 import "../css/header.css";
 import Logo from "../images/logo.jsx";
 import AuthPanel from "./authPanel.jsx";
+import ProfileMenu from "./profileMenu.jsx";
 import { useRef, useState } from "react";
 import { searchCoins, searchPools } from "../api/coingecko";
 import { useTrendingStore } from "../store/trendingStore";
 import { useAuth } from "../hooks/useAuth.js";
+import { useFavoritesStore } from "../store/favoritesStore.ts";
 
 const pairQuoteCurrencies = ["USDT", "USDC", "BUSD", "USD"];
 
@@ -52,13 +54,15 @@ const Icon = ({ children, className = "" }) => (
   </svg>
 );
 
-function Header() {
+function Header({ onMenuToggle }) {
   const [isAuthPanelOpen, setIsAuthPanelOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
+  const favorites = useFavoritesStore((state) => state.favorites);
   const trendingCoins = useTrendingStore((state) => state.coins);
   const searchRequest = useRef(0);
   const searchTimer = useRef(null);
@@ -105,6 +109,7 @@ function Header() {
 
   return (
     <header className="header">
+      <button className="menu-toggle" aria-label="Open menu" onClick={onMenuToggle}><span /><span /><span /></button>
       <div className="brand">
         <Logo color="#5661ff" className="logo" />
         <span>TradeCheck</span>
@@ -133,7 +138,7 @@ function Header() {
       )}
       </div>
       <div className="header-actions">
-        <button aria-label="Favorites">
+        <button aria-label="Favorites" title="Favorites" onClick={() => window.dispatchEvent(new CustomEvent("tradecheck:show-favorites"))}>
           <Icon>
             <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" />
           </Icon>
@@ -142,12 +147,12 @@ function Header() {
           <Icon>
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" />
           </Icon>
-          <b>3</b>
+          {favorites.length > 0 && <b>{favorites.length}</b>}
         </button>
         <button
           className="profile"
           aria-label="Profile"
-          onClick={() => (user ? signOut() : setIsAuthPanelOpen(true))}
+          onClick={() => (user ? setIsProfileOpen((value) => !value) : setIsAuthPanelOpen(true))}
           title={user ? "Выйти" : "Войти"}
         >
           <Icon>
@@ -156,6 +161,7 @@ function Header() {
           </Icon>
         </button>
       </div>
+      {isProfileOpen && <ProfileMenu onClose={() => setIsProfileOpen(false)} />}
       {isAuthPanelOpen && (
         <AuthPanel onClose={() => setIsAuthPanelOpen(false)} />
       )}
