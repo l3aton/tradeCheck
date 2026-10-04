@@ -3,6 +3,7 @@ import Logo from "../images/logo.jsx";
 import AuthPanel from "./authPanel.jsx";
 import ProfileMenu from "./profileMenu.jsx";
 import { useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { searchCoins, searchPools } from "../api/coingecko";
 import { useTrendingStore } from "../store/trendingStore";
 import { useAuth } from "../hooks/useAuth.js";
@@ -161,10 +162,16 @@ function Header({ onMenuToggle }) {
           </Icon>
         </button>
       </div>
-      {isProfileOpen && <ProfileMenu onClose={() => setIsProfileOpen(false)} />}
-      {isAuthPanelOpen && (
-        <AuthPanel onClose={() => setIsAuthPanelOpen(false)} />
-      )}
+      {isProfileOpen &&
+        createPortal(
+          <ProfileMenu onClose={() => setIsProfileOpen(false)} />,
+          document.body,
+        )}
+      {isAuthPanelOpen &&
+        createPortal(
+          <AuthPanel onClose={() => setIsAuthPanelOpen(false)} />,
+          document.body,
+        )}
     </header>
   );
 }

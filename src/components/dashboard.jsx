@@ -91,10 +91,10 @@ function Dashboard({ page, onPageChange, onlyFavorites = false }) {
     <main className="dashboard">
       <div className="page-heading">
         <div>
-          <p className="eyebrow">MARKET</p>
-          <h1>Market Overview</h1>
+          <p className="eyebrow">{onlyFavorites ? "SAVED" : "MARKET"}</p>
+          <h1>{onlyFavorites ? "Favorites" : "Market Overview"}</h1>
         </div>
-        <button className="range-button">24h</button>
+        <button className="range-button" aria-label="Selected time range">24h</button>
       </div>
       <section className="stats-grid">
         <div className="stat">

@@ -1,22 +1,26 @@
 .modal {
   position: fixed;
   inset: 0;
-  z-index: 10;
+  z-index: 60;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(0 0 0 / 70%);
+  padding: 20px;
+  background: rgb(0 0 0 / 22%);
+  backdrop-filter: blur(18px);
 }
 .modal-content {
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 80%;
-  height: 80%;
+  width: min(100%, 1040px);
+  height: min(82vh, 760px);
   padding: 2rem;
-  border: 1px solid var(--accent);
-  border-radius: 0.7rem;
-  background-color: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgb(255 255 255 / 94%);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px);
 }
 .chart-container {
   flex: 1;
@@ -29,11 +33,19 @@
 }
 .close {
   position: absolute;
-  top: 0.5rem;
-  right: 0.75rem;
+  top: 0.75rem;
+  right: 0.9rem;
+  width: 34px;
+  height: 34px;
   border: 0;
+  border-radius: 50%;
   background: transparent;
-  color: inherit;
+  color: var(--muted);
   cursor: pointer;
   font-size: 1.5rem;
+}
+
+.close:hover {
+  background: rgb(118 118 128 / 12%);
+  color: var(--text);
 }

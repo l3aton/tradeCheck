@@ -1,37 +1,43 @@
 :root {
-  --bg: #050d19;
-  --panel: #0e1828;
-  --panel-2: #111d30;
-  --line: #1d2a3e;
-  --text: #f3f6fc;
-  --muted: #91a0b8;
-  --blue: #5260ff;
-  --green: #20d886;
-  --red: #ff4d5c;
+  color-scheme: light;
+  --bg: #f2f2f7;
+  --surface: #ffffff;
+  --surface-raised: rgb(255 255 255 / 84%);
+  --panel: var(--surface);
+  --panel-2: #f7f7fb;
+  --line: rgb(60 60 67 / 14%);
+  --line-strong: rgb(60 60 67 / 22%);
+  --text: #1d1d1f;
+  --muted: rgb(60 60 67 / 64%);
+  --muted-2: rgb(60 60 67 / 42%);
+  --blue: #007aff;
+  --green: #34c759;
+  --red: #ff3b30;
+  --yellow: #ffcc00;
+  --shadow: 0 18px 55px rgb(0 0 0 / 8%);
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
 }
 html {
-  scrollbar-color: #111d30 #111d30;
+  scrollbar-color: rgb(60 60 67 / 22%) transparent;
 }
 * {
   box-sizing: border-box;
 }
 body {
   margin: 0;
-  background: radial-gradient(
-    circle at 48% -25%,
-    #14233c 0,
-    #07111f 42%,
-    #050d19 75%
-  );
+  background: var(--bg);
   color: var(--text);
   font-family:
-    Inter,
-    ui-sans-serif,
     system-ui,
     -apple-system,
+    BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
   font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 button,
 input {
@@ -40,6 +46,11 @@ input {
 button {
   color: inherit;
   cursor: pointer;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgb(0 122 255 / 22%);
+  outline-offset: 2px;
 }
 .price-up {
   color: var(--green);
